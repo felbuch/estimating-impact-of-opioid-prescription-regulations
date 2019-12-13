@@ -1,0 +1,76 @@
+import pandas as pd
+drug_data_full = pd.DataFrame()
+for i in range(13):
+    name = 'Underlying Cause of Death, ' + str(i+2003)+'.txt'
+    temp_data = pd.read_csv(name, delimiter="\t")
+    drug_data_full = drug_data_full.append(temp_data)
+    
+##Check results
+
+drug_data_full.to_csv("drug_data_full.csv")
+
+## Cleaning the mortality data:
+data_drop = drug_data_full.drop((['Drug/Alcohol Induced Cause','Notes', 'Year Code']), axis=1)
+data_drop.rename(columns = {'County Code':'FIPS'}, inplace = True)
+dd = data_drop.dropna(how='all')
+mortality_data1 = dd[(dd['Drug/Alcohol Induced Cause Code'] != 'A9') &
+(dd['Drug/Alcohol Induced Cause Code'] != 'D9') &
+(dd['Drug/Alcohol Induced Cause Code'] != 'O9')]
+
+mortality_data2 = mortality_data1.drop('Drug/Alcohol Induced Cause Code', axis='columns')
+mortality_data = mortality_data2[(mortality_data2['Deaths'] != 'Missing')]
+new = mortality_data['County'].str.split(", ", n = 1, expand = True) 
+
+mortality_data['State'] = new[1]
+mortality_data['County'] = new[0]
+mortality_data
+
+### There are 25 missing deaths in the resultant data . Will ignore that later during merge###
+#########################################################
+## Obtaining population data
+
+def combine_state_and_county_into_FIP_code(state, county):
+    
+    state = str(state)
+    county = str(county)
+    
+    assert len(state) > 0, "The state code is missing or couldn't be converted into a string."
+    assert len(county) > 0, "The county code is missing or couldn't be converted into a string"
+    assert len(state) <= 2, "State has code with more than two digits. State codes must have at most 2 digits."
+    assert len(county) <= 3, "County has code with more than three digits. County codes must have at most 3 digits."
+    
+    #Add leading zeros to the county code until it has three digits.
+    while len(county) < 3:
+        county = "0" + county
+    #Note that we do not add leading zeros to the state level.    
+    
+    #Produce the FIPS code by concatenating state and county
+    FIPS = state + county
+    return(FIPS)
+
+
+#Load populations dataset
+pop = pd.read_csv("County Population Data.csv", encoding = "latin-1")
+pop['FIPS'] = 0
+
+for i in range(len(pop)):
+    
+    state = pop['STATE'][i]    
+    county = pop['COUNTY'][i]
+    pop.loc[:,'FIPS'][i] = combine_state_and_county_into_FIP_code(state, county )
+    
+
+for c in pop.columns:
+    print(c)
+
+## Cleaning population data
+population = pop.loc[:,['FIPS','POPESTIMATE2010']]
+
+#########################################################
+## Merging mortality data with population data
+trying_merge = pd.merge(mortality_data, population, on='FIPS', validate='m:1', indicator=True, how='inner')
+trying_merge = trying_merge.drop('_merge', axis='columns')
+trying_merge
+######
+trying_merge.to_csv("merge_mortality_population_data.csv")
+##

@@ -1,0 +1,9 @@
+import pandas as pd 
+import numpy as np
+fips = pd.read_csv("county_fips.csv")
+fips.dropna()
+fips['BUYER_COUNTY'] = fips['name'].apply(lambda x: x.upper())
+fips['BUYER_COUNTY'] = fips['BUYER_COUNTY'].str[:-6]
+#fips['BUYER_COUNTY'].dtype()
+fips = fips.drop('name', axis = 1)
+fips.to_csv("fips_with_county.csv")

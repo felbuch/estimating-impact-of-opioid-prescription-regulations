@@ -1,0 +1,22 @@
+total 590
+-rw-r--r-- 1 Felipe 197121   2377 Nov 12 22:01 Add FIPS to shipment dataset.py
+-rw-r--r-- 1 Felipe 197121   2533 Nov 12 22:01 Adds FIP to population data.py
+-rw-r--r-- 1 Felipe 197121    128 Nov 19 23:05 Calculate deaths per capita.py
+-rw-r--r-- 1 Felipe 197121   1971 Nov 19 23:05 DifferenceInDifference.txt
+-rw-r--r-- 1 Felipe 197121      0 Nov 20 00:19 files_on_folder.txt
+-rw-r--r-- 1 Felipe 197121   1552 Nov 19 23:05 FIPS
+drwxr-xr-x 1 Felipe 197121      0 Nov 19 23:05 [0m[01;34mFunctions[0m/
+-rw-r--r-- 1 Felipe 197121   1498 Nov 19 23:05 group shipment data by county and year.py
+-rw-r--r-- 1 Felipe 197121   6282 Nov 19 23:05 merge datasets - only population and cause of death.py
+-rw-r--r-- 1 Felipe 197121   6616 Nov 19 23:05 merge datasets.py
+-rw-r--r-- 1 Felipe 197121   7507 Nov 12 22:01 merged_data.gzip
+-rw-r--r-- 1 Felipe 197121   2891 Nov 19 23:05 Merging all mortality data with the cleaned population data
+-rw-r--r-- 1 Felipe 197121    318 Nov 12 22:01 New smaller fips code file
+-rw-r--r-- 1 Felipe 197121   1577 Nov 19 23:05 pre_post_graphs.py
+-rw-r--r-- 1 Felipe 197121   1652 Nov 12 22:01 PreparingMortalityDataToMerge.py
+-rw-r--r-- 1 Felipe 197121   1350 Nov 12 22:01 ProcessingMortalityData.txt
+-rw-r--r-- 1 Felipe 197121   3231 Nov 19 23:05 ReadingDrugData.py
+-rw-r--r-- 1 Felipe 197121   1515 Nov 12 22:01 ReadingDrugData.txt
+-rw-r--r-- 1 Felipe 197121   1856 Nov 12 22:01 Reshape population data.py
+-rw-r--r-- 1 Felipe 197121 519038 Nov 19 23:05 TryingtoCreateModel.ipynb
+-rw-r--r-- 1 Felipe 197121    698 Nov 12 22:01 YearSubsetting.txt
